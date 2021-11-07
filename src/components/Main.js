@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Row, Col } from "antd";
+import axios from "axios";
 import { NEARBY_SATELLITE, SAT_API_KEY, STARLINK_CATEGORY } from "../constants";
 import SatSetting from "./SatSetting";
 import SatelliteList from "./SatelliteList";
@@ -13,7 +13,7 @@ class Main extends Component {
       satInfo: null,
       satList: null,
       setting: null,
-      isLoadingList: false
+      isLoadingList: false,
     };
   }
   render() {
@@ -35,42 +35,41 @@ class Main extends Component {
     );
   }
 
-  showMap = selected => {
-    this.setState(preState => ({
+  showMap = (selected) => {
+    this.setState((preState) => ({
       ...preState,
-      satList: [...selected]
+      satList: [...selected],
     }));
   };
 
-  showNearbySatellite = setting => {
+  showNearbySatellite = (setting) => {
     this.setState({
       isLoadingList: true,
-      setting: setting
+      setting: setting,
     });
     this.fetchSatellite(setting);
   };
 
-  fetchSatellite = setting => {
+  fetchSatellite = (setting) => {
     const { latitude, longitude, elevation, altitude } = setting;
     const url = `/api/${NEARBY_SATELLITE}/${latitude}/${longitude}/${elevation}/${altitude}/${STARLINK_CATEGORY}/&apiKey=${SAT_API_KEY}`;
 
     this.setState({
-      isLoadingList: true
+      isLoadingList: true,
     });
 
     axios
       .get(url)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.setState({
           satInfo: response.data,
-          isLoadingList: false
+          isLoadingList: false,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("err in fetch satellite -> ", error);
       });
   };
 }
-
 export default Main;

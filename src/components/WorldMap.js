@@ -12,18 +12,18 @@ import { timeFormat as d3TimeFormat } from "d3-time-format";
 import {
   WORLD_MAP_URL,
   SATELLITE_POSITION_URL,
-  SAT_API_KEY
+  SAT_API_KEY,
 } from "../constants";
 
 const width = 960;
 const height = 600;
 
-class WorldMap1 extends Component {
+class WorldMap extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: false,
-      isDrawing: false
+      isDrawing: false,
     };
     this.map = null;
     this.color = d3Scale.scaleOrdinal(schemeCategory10);
@@ -34,32 +34,27 @@ class WorldMap1 extends Component {
   componentDidMount() {
     axios
       .get(WORLD_MAP_URL)
-      .then(res => {
+      .then((res) => {
         const { data } = res;
         const land = feature(data, data.objects.countries).features;
         this.generateMap(land);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log("err in fetch map data ", e.message);
       });
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.satData !== this.props.satData) {
-      const {
-        latitude,
-        longitude,
-        elevation,
-        altitude,
-        duration
-      } = this.props.observerData;
+      const { latitude, longitude, elevation, duration } =
+        this.props.observerData;
       const endTime = duration * 60;
 
       this.setState({
-        isLoading: true
+        isLoading: true,
       });
 
-      const urls = this.props.satData.map(sat => {
+      const urls = this.props.satData.map((sat) => {
         const { satid } = sat;
         const url = `/api/${SATELLITE_POSITION_URL}/${satid}/${latitude}/${longitude}/${elevation}/${endTime}/&apiKey=${SAT_API_KEY}`;
 
@@ -67,11 +62,11 @@ class WorldMap1 extends Component {
       });
 
       Promise.all(urls)
-        .then(res => {
-          const arr = res.map(sat => sat.data);
+        .then((res) => {
+          const arr = res.map((sat) => sat.data);
           this.setState({
             isLoading: false,
-            isDrawing: true
+            isDrawing: true,
           });
 
           if (!prevState.isDrawing) {
@@ -82,20 +77,18 @@ class WorldMap1 extends Component {
               "Please wait for these satellite animation to finish before selection new ones!";
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log("err in fetch satellite position -> ", e.message);
         });
     }
   }
 
-  track = data => {
+  track = (data) => {
     if (!data[0].hasOwnProperty("positions")) {
       throw new Error("no position data");
-      return;
     }
 
     const len = data[0].positions.length;
-    const { duration } = this.props.observerData;
     const { context2 } = this.map;
 
     let now = new Date();
@@ -123,7 +116,7 @@ class WorldMap1 extends Component {
         return;
       }
 
-      data.forEach(sat => {
+      data.forEach((sat) => {
         const { info, positions } = sat;
         this.drawSat(info, positions[i]);
       });
@@ -169,7 +162,7 @@ class WorldMap1 extends Component {
     );
   }
 
-  generateMap = land => {
+  generateMap = (land) => {
     const projection = geoKavrayskiy7()
       .scale(170)
       .translate([width / 2, height / 2])
@@ -188,11 +181,9 @@ class WorldMap1 extends Component {
     const context = canvas.node().getContext("2d");
     const context2 = canvas2.node().getContext("2d");
 
-    let path = geoPath()
-      .projection(projection)
-      .context(context);
+    let path = geoPath().projection(projection).context(context);
 
-    land.forEach(ele => {
+    land.forEach((ele) => {
       context.fillStyle = "#B3DDEF";
       context.strokeStyle = "#000";
       context.globalAlpha = 0.7;
@@ -217,9 +208,9 @@ class WorldMap1 extends Component {
       projection: projection,
       graticule: graticule,
       context: context,
-      context2: context2
+      context2: context2,
     };
   };
 }
 
-export default WorldMap1;
+export default WorldMap;
