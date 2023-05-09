@@ -34,5 +34,5 @@ git clone https://github.com/williamliuzhenwei/starlink.git
 **API**
 Register on N2Yo: https://www.n2yo.com/login/register, then visit profile page to access the button that generates the API Key.
 
-**Sample screenshot of webapp**
+**Sample screenshot of webapp**<br>
 <br><img src="public/screenshot.png" width="700">
