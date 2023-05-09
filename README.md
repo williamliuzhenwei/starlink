@@ -23,13 +23,13 @@ git clone https://github.com/williamliuzhenwei/starlink.git
   - d3-scale-chromatic https://github.com/d3/d3-geo-projection
     - ```npm install --save d3-geo-projection```
   - d3-scale-chromatic https://github.com/d3/d3-selection
-    - ```npm install --save d3-selection
+    - ```npm install --save d3-selection```
   - d3-time-format https://github.com/d3/d3-time-format
     - ```npm install --save d3-time-format```
   - d3-scale http://github.com/d3/d3-scale
     - ```npm install --save d3-scale```
   - d3-scale-chromatic https://github.com/d3/d3-scale-cheomatic
-    - ```npm install --save d3-scale-chromatic
+    - ```npm install --save d3-scale-chromatic```
   
 **API**
 Register on N2Yo: https://www.n2yo.com/login/register, then visit profile page to access the button that generates the API Key.
