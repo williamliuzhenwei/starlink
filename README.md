@@ -8,7 +8,7 @@ This is a personal project that allows people to track Starlink's satellites and
 STEPS TO RUN:
 - (1) Open terminal and Clone/Download our repository 
 ```
-git clone [https://github.com/Fasgarinejad/ECE143_project](https://github.com/williamliuzhenwei/starlink.git)
+git clone https://github.com/williamliuzhenwei/starlink.git
 ```
 - (2) ```npm install```  to install all necessary packages
 - (3) ```npm start``` to start the project
